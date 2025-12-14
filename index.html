@@ -3,20 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basel.expert | Projectile Simulator</title>
     
-    <title>Basel Abdo | Developer</title>
-    <meta name="description" content="Basel Abdo - Student Developer portfolio coming soon.">
-    <meta property="og:title" content="Basel Abdo | Developer">
-    <meta property="og:description" content="Building the future, one line of code at a time.">
-    <meta property="og:image" content="https://basel.expert/og-image.jpg"> <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
+        :root {
+            --bg-color: #050505;
+            --panel-bg: rgba(255, 255, 255, 0.05);
+            --text-primary: #ffffff;
+            --text-secondary: #94a3b8;
+            --accent-color: #60a5fa;
+            --accent-glow: rgba(96, 165, 250, 0.5);
+            --grid-color: rgba(255, 255, 255, 0.1);
+        }
+
         * {
             box-sizing: border-box;
             margin: 0;
@@ -24,224 +28,429 @@
         }
 
         body {
-            background-color: #050505;
-            color: #ffffff;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
             font-family: 'Outfit', sans-serif;
             height: 100vh;
             display: flex;
-            justify-content: center;
-            align-items: center;
+            flex-direction: column;
             overflow: hidden;
-            position: relative;
         }
 
-        /* تحسين الأداء للإضاءة */
-        .cursor-glow {
-            position: absolute;
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle, rgba(29, 78, 216, 0.4), rgba(0,0,0,0));
-            border-radius: 50%;
-            pointer-events: none; 
-            transform: translate(-50%, -50%);
-            z-index: 0;
-            filter: blur(50px); 
-            transition: width 0.3s, height 0.3s; 
-            will-change: transform, left, top; /* تحسين الأداء */
-        }
-
-        .static-glow {
-            position: absolute;
-            top: 10%;
-            right: 10%;
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, rgba(139, 92, 246, 0.15), rgba(0,0,0,0));
-            border-radius: 50%;
-            filter: blur(60px);
-            z-index: 0;
-            animation: pulse 5s infinite ease-in-out;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 0.5; }
-            50% { transform: scale(1.2); opacity: 0.8; }
-        }
-
-        /* كارت الزجاج مع أنيميشن الدخول */
-        .glass-card {
-            position: relative;
+        /* الهيدر البسيط */
+        header {
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--grid-color);
+            background: rgba(5, 5, 5, 0.8);
+            backdrop-filter: blur(10px);
             z-index: 10;
-            background: rgba(255, 255, 255, 0.03); 
-            backdrop-filter: blur(20px); 
-            -webkit-backdrop-filter: blur(20px);
-            padding: 60px 40px;
-            border-radius: 24px;
-            border: 1px solid rgba(255, 255, 255, 0.1); 
-            text-align: center;
-            max-width: 450px;
-            width: 90%;
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
-            transition: transform 0.3s ease, border-color 0.3s ease;
-            
-            /* أنيميشن الظهور */
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeInUp 1s ease-out forwards;
         }
 
-        @keyframes fadeInUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .glass-card:hover {
-            transform: translateY(-5px); 
-            border-color: rgba(255, 255, 255, 0.2);
-        }
-
-        .icon {
-            font-size: 3rem;
-            margin-bottom: 20px;
-            background: linear-gradient(to right, #60a5fa, #a78bfa);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            display: inline-block; /* مهم عشان التدرج يشتغل صح مع بعض المتصفحات */
-        }
-
-        h1 {
+        .brand {
             font-weight: 700;
-            font-size: 2.5rem;
-            letter-spacing: -1px;
-            margin-bottom: 10px;
-            background: linear-gradient(to bottom, #ffffff, #aaaaaa);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .role {
-            font-weight: 300;
-            font-size: 1.1rem;
-            color: #94a3b8;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            margin-bottom: 30px;
+            font-size: 1.5rem;
             display: flex;
-            justify-content: center;
             align-items: center;
-            gap: 15px; /* زيادة المسافة شوية */
+            gap: 10px;
         }
+        .brand i { color: var(--accent-color); }
 
-        .divider {
-            width: 30px;
-            height: 1px; /* أنحف شوية أشيك */
-            background: linear-gradient(90deg, transparent, #334155, transparent); /* تدرج للخط */
-        }
-
-        p {
-            font-size: 0.95rem;
-            color: #64748b;
-            line-height: 1.6;
-            margin-bottom: 40px;
-        }
-
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-        }
-
-        .btn {
+        .back-btn {
+            color: var(--text-secondary);
             text-decoration: none;
-            color: #94a3b8; /* لون أهدى للأيقونات */
-            font-size: 1.3rem;
-            width: 50px;
-            height: 50px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.3s;
+        }
+        .back-btn:hover { color: var(--accent-color); }
+
+        /* الحاوية الرئيسية */
+        main {
+            flex: 1;
+            display: flex;
+            position: relative;
+        }
+
+        /* لوحة التحكم الجانبية */
+        .controls-panel {
+            width: 320px;
+            background: var(--panel-bg);
+            backdrop-filter: blur(20px);
+            border-right: 1px solid var(--grid-color);
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            z-index: 5;
+            overflow-y: auto;
+        }
+
+        h2 {
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .value-display {
+            font-family: 'Roboto Mono', monospace;
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+
+        /* تنسيق الـ Sliders */
+        input[type=range] {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 6px;
+            background: var(--grid-color);
+            border-radius: 3px;
+            outline: none;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            background: var(--accent-color);
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.05);
+            cursor: pointer;
+            box-shadow: 0 0 10px var(--accent-glow);
+        }
+
+        /* اختيار اللون */
+        .color-picker-wrapper {
+            display: flex;
+            gap: 10px;
+        }
+        .color-option {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+        }
+        .color-option.active {
+            border-color: white;
+            transform: scale(1.1);
+        }
+
+        /* الأزرار */
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
             display: flex;
             align-items: center;
             justify-content: center;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* تأثير ارتداد خفيف */
+            gap: 10px;
         }
 
-        .btn:hover {
-            background: rgba(255, 255, 255, 0.1);
-            transform: scale(1.15);
-            color: #ffffff;
-            border-color: #60a5fa;
-            box-shadow: 0 0 20px rgba(96, 165, 250, 0.2);
+        .btn-primary {
+            background: var(--accent-color);
+            color: #000;
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+        .btn-primary:hover {
+            background: #4a90e2;
+            transform: translateY(-2px);
         }
 
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid var(--grid-color);
+            color: var(--text-secondary);
+        }
+        .btn-secondary:hover {
+            border-color: var(--text-primary);
+            color: var(--text-primary);
+        }
+
+        /* منطقة الرسم (Canvas) */
+        .canvas-container {
+            flex: 1;
+            position: relative;
+            background-image: 
+                linear-gradient(var(--grid-color) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+            background-size: 50px 50px;
+            background-position: -1px -1px; /* لمحاذاة الشبكة */
+        }
+
+        canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+        
+        /* تحسين العرض على الموبايل */
+        @media (max-width: 768px) {
+            main { flex-direction: column; }
+            .controls-panel { width: 100%; height: auto; max-height: 40vh; border-right: none; border-bottom: 1px solid var(--grid-color); }
+        }
     </style>
 </head>
 <body>
 
-    <div class="cursor-glow" id="glow"></div>
-    <div class="static-glow"></div>
-
-    <div class="glass-card">
-        <div class="icon">
-            <i class="fa-solid fa-bolt"></i> </div>
-        <h1>Basel Abdo</h1>
-        
-        <div class="role">
-            <div class="divider"></div>
-            Student Developer
-            <div class="divider"></div>
+    <header>
+        <div class="brand">
+            <i class="fa-solid fa-bolt"></i>
+            BASEL.EXPERT
         </div>
+        <a href="index.html" class="back-btn"> <i class="fa-solid fa-arrow-left"></i> Back to Home
+        </a>
+    </header>
 
-        <p>
-            Building digital experiences.<br>This space is being engineered for the future.
-        </p>
+    <main>
+        <aside class="controls-panel">
+            <div>
+                <h2>Simulation Controls</h2>
+                <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 20px;">Configure launch parameters.</p>
+            </div>
 
-        <div class="social-links">
-            <a href="mailto:contact@basel.expert" class="btn" title="Email Me">
-                <i class="fa-regular fa-envelope"></i>
-            </a>
-            <a href="https://www.linkedin.com/in/2basel/" class="btn" target="_blank" title="LinkedIn">
-                <i class="fa-brands fa-linkedin-in"></i>
-            </a>
-            <a href="https://github.com/2basel" class="btn" target="_blank" title="GitHub">
-                <i class="fa-brands fa-github"></i>
-            </a>
-        </div>
-    </div>
+            <div class="control-group">
+                <label for="speed">Initial Speed (m/s) <span id="speed-val" class="value-display">80</span></label>
+                <input type="range" id="speed" min="10" max="150" value="80">
+            </div>
+
+            <div class="control-group">
+                <label for="angle">Launch Angle (deg) <span id="angle-val" class="value-display">45°</span></label>
+                <input type="range" id="angle" min="5" max="85" value="45">
+            </div>
+
+            <div class="control-group">
+                <label>Projectile Color</label>
+                <div class="color-picker-wrapper" id="color-picker">
+                    <div class="color-option active" style="background: #60a5fa;" data-color="#60a5fa"></div> <div class="color-option" style="background: #e25555;" data-color="#e25555"></div> <div class="color-option" style="background: #50c878;" data-color="#50c878"></div> <div class="color-option" style="background: #a78bfa;" data-color="#a78bfa"></div> <div class="color-option" style="background: #f1c40f;" data-color="#f1c40f"></div> </div>
+            </div>
+            
+            <div style="margin-top: auto; display: flex; flex-direction: column; gap: 15px;">
+                <button id="launch-btn" class="btn btn-primary">
+                    <i class="fa-solid fa-rocket"></i> LAUNCH
+                </button>
+                <button id="clear-btn" class="btn btn-secondary">
+                    <i class="fa-solid fa-trash"></i> Clear Simulation
+                </button>
+            </div>
+
+            <div style="border-top: 1px solid var(--grid-color); padding-top: 20px;">
+                <h2 style="font-size: 1rem;">Quick Presets</h2>
+                 <div style="display: flex; gap: 10px; margin-top: 10px;">
+                    <button class="btn btn-secondary" style="flex:1; padding: 8px; font-size: 0.9rem;" onclick="preset(45, '#60a5fa')">Max Range</button>
+                    <button class="btn btn-secondary" style="flex:1; padding: 8px; font-size: 0.9rem;" onclick="preset(75, '#e25555')">High Arc</button>
+                </div>
+            </div>
+
+        </aside>
+
+        <section class="canvas-container">
+            <canvas id="simCanvas"></canvas>
+        </section>
+    </main>
+
 
     <script>
-        const glow = document.getElementById('glow');
-        
-        // استخدام requestAnimationFrame لضمان أفضل أداء
-        let mouseX = 0, mouseY = 0;
-        let glowX = 0, glowY = 0;
+        // --- إعدادات الـ Canvas ---
+        const canvas = document.getElementById('simCanvas');
+        const ctx = canvas.getContext('2d');
+        let width, height;
 
-        document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-        });
-
-        // دالة تحريك ناعمة جداً
-        function animateGlow() {
-            // معادلة للتحرك بنعومة (Lerp)
-            glowX += (mouseX - glowX) * 0.1;
-            glowY += (mouseY - glowY) * 0.1;
-
-            glow.style.left = glowX + 'px';
-            glow.style.top = glowY + 'px';
-
-            requestAnimationFrame(animateGlow);
+        function resizeCanvas() {
+            width = canvas.offsetWidth;
+            height = canvas.offsetHeight;
+            canvas.width = width;
+            canvas.height = height;
         }
-        animateGlow();
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas(); // استدعاء أولي
 
-        document.addEventListener('mousedown', () => {
-            glow.style.transform = 'translate(-50%, -50%) scale(1.2)';
+        // --- ثوابت الفيزياء والعرض ---
+        const G = 9.8; // عجلة الجاذبية
+        const TIME_STEP = 0.05; // دقة الزمن في كل فريم (للتسريع/التبطيء)
+        const SCALE_X = 4; // معامل تكبير المحور الأفقي (عشان الرسمة تبان في الشاشة)
+        const SCALE_Y = 4; // معامل تكبير المحور الرأسي
+
+        let projectiles = [];
+        let selectedColor = '#60a5fa';
+
+        // --- كلاس المقذوف (Projectile Class) ---
+        class Projectile {
+            constructor(v0, angleDeg, color) {
+                this.v0 = v0;
+                this.angleRad = angleDeg * (Math.PI / 180);
+                this.color = color;
+                this.t = 0;
+                
+                // السرعات الابتدائية
+                this.vx = this.v0 * Math.cos(this.angleRad);
+                this.vy_init = this.v0 * Math.sin(this.angleRad);
+                
+                // الموقع الحالي (يبدأ من 0,0)
+                this.x = 0;
+                this.y = 0;
+                
+                // المسار لرسم الخط
+                this.path = [{x: 0, y: 0}];
+                this.landed = false;
+            }
+
+            update() {
+                if (this.landed) return;
+
+                this.t += TIME_STEP;
+
+                // معادلات الحركة للمقذوفات
+                // x = vx * t
+                this.x = this.vx * this.t;
+                // y = vy_init * t - 0.5 * g * t^2
+                this.y = (this.vy_init * this.t) - (0.5 * G * Math.pow(this.t, 2));
+
+                if (this.y <= 0 && this.t > 0.1) {
+                    this.y = 0;
+                    this.landed = true;
+                }
+                this.path.push({x: this.x, y: this.y});
+            }
+
+            draw(ctx, height) {
+                ctx.beginPath();
+                ctx.moveTo(0, height); // نقطة البداية (أسفل اليسار)
+
+                // رسم المسار (مع مراعاة قلب محور Y لأن الـ canvas بيبدأ من فوق)
+                for (let point of this.path) {
+                    const canvasX = point.x * SCALE_X;
+                    const canvasY = height - (point.y * SCALE_Y);
+                    ctx.lineTo(canvasX, canvasY);
+                }
+
+                // ستايل الخط (مضيء)
+                ctx.strokeStyle = this.color;
+                ctx.lineWidth = 3;
+                ctx.lineCap = 'round';
+                ctx.shadowBlur = 15; // التوهج
+                ctx.shadowColor = this.color;
+                ctx.stroke();
+                
+                ctx.shadowBlur = 0; // ريست التوهج عشان ميبوظش باقي الرسم
+
+                // رسم رأس المقذوف لو لسه طاير
+                if (!this.landed) {
+                    const headX = this.x * SCALE_X;
+                    const headY = height - (this.y * SCALE_Y);
+                    ctx.beginPath();
+                    ctx.arc(headX, headY, 5, 0, Math.PI * 2);
+                    ctx.fillStyle = '#ffffff';
+                    ctx.fill();
+                }
+            }
+        }
+
+        // --- حلقة الأنيميشن (The Game Loop) ---
+        function animate() {
+            ctx.clearRect(0, 0, width, height); // مسح الشاشة
+
+            // رسم محاور الإحداثيات (اختياري بس شكله حلو)
+            drawAxes();
+
+            for (let p of projectiles) {
+                p.update();
+                p.draw(ctx, height);
+            }
+            requestAnimationFrame(animate);
+        }
+        animate(); // بدء التشغيل
+
+        function drawAxes() {
+            ctx.beginPath();
+            ctx.strokeStyle = 'rgba(255,255,255,0.3)';
+            ctx.lineWidth = 1;
+            // محور X
+            ctx.moveTo(0, height);
+            ctx.lineTo(width, height);
+            // محور Y
+            ctx.moveTo(0, height);
+            ctx.lineTo(0, 0);
+            ctx.stroke();
+        }
+
+
+        // --- التعامل مع واجهة المستخدم (UI Handlers) ---
+        
+        // Sliders
+        const speedSlider = document.getElementById('speed');
+        const angleSlider = document.getElementById('angle');
+        const speedValDisplay = document.getElementById('speed-val');
+        const angleValDisplay = document.getElementById('angle-val');
+
+        speedSlider.addEventListener('input', (e) => speedValDisplay.innerText = e.target.value);
+        angleSlider.addEventListener('input', (e) => angleValDisplay.innerText = e.target.value + '°');
+
+        // Color Picker
+        document.querySelectorAll('.color-option').forEach(option => {
+            option.addEventListener('click', function() {
+                document.querySelectorAll('.color-option').forEach(c => c.classList.remove('active'));
+                this.classList.add('active');
+                selectedColor = this.dataset.color;
+            });
         });
-        document.addEventListener('mouseup', () => {
-            glow.style.transform = 'translate(-50%, -50%) scale(1)';
+
+        // Buttons
+        document.getElementById('launch-btn').addEventListener('click', () => {
+            const v0 = parseInt(speedSlider.value);
+            const angle = parseInt(angleSlider.value);
+            projectiles.push(new Projectile(v0, angle, selectedColor));
         });
+
+        document.getElementById('clear-btn').addEventListener('click', () => {
+            projectiles = [];
+        });
+
+        // Presets Functions
+        function preset(angle, color) {
+             angleSlider.value = angle;
+             angleValDisplay.innerText = angle + '°';
+             // Select color programmatically
+             document.querySelectorAll('.color-option').forEach(c => {
+                c.classList.remove('active');
+                if(c.dataset.color === color) {
+                    c.classList.add('active');
+                    selectedColor = color;
+                }
+             });
+             // Launch immediately
+             projectiles.push(new Projectile(parseInt(speedSlider.value), angle, color));
+        }
+
+        // إطلاق تجريبي عند فتح الصفحة
+        setTimeout(() => {
+             preset(45, '#60a5fa');
+             preset(70, '#a78bfa');
+        }, 500);
+
     </script>
 </body>
 </html>
