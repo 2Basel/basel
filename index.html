@@ -13,7 +13,7 @@
     <style>
         :root {
             --bg-color: #050505;
-            --panel-bg: rgba(20, 20, 25, 0.85);
+            --panel-bg: rgba(20, 20, 25, 0.9);
             --text-primary: #ffffff;
             --text-secondary: #94a3b8;
             --accent-color: #60a5fa;
@@ -52,12 +52,26 @@
 
         .brand { font-weight: 700; font-size: 1.3rem; display: flex; align-items: center; gap: 10px; letter-spacing: -0.5px; color: white; }
         .brand i { color: var(--accent-color); font-size: 1.1rem; }
-        .brand-subtitle { font-weight: 300; opacity: 0.6; font-size: 0.9rem; margin-left: 5px; border-left: 1px solid #555; padding-left: 10px; color: var(--text-secondary); }
+        .brand-subtitle { font-weight: 300; opacity: 0.8; font-size: 0.9rem; margin-left: 5px; border-left: 1px solid #555; padding-left: 10px; color: var(--text-secondary); letter-spacing: 1px; }
 
-        .project-badge { display: flex; flex-direction: column; align-items: flex-end; justify-content: center; }
-        .uni-tag {
-            font-size: 0.65rem; color: var(--accent-color); font-weight: 700; letter-spacing: 1.5px; margin-bottom: 4px; text-transform: uppercase; text-shadow: 0 0 10px rgba(96, 165, 250, 0.4);
+        /* MODIFIED: Centered Alignment for IDs */
+        .project-badge { 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; /* This centers the text over the box */
+            justify-content: center; 
         }
+        
+        .uni-tag {
+            font-size: 0.65rem; 
+            color: var(--accent-color); 
+            font-weight: 700; 
+            letter-spacing: 2px; /* Increased spacing for cleaner look */
+            margin-bottom: 5px; 
+            text-transform: uppercase; 
+            text-shadow: 0 0 10px rgba(96, 165, 250, 0.4);
+        }
+        
         .student-ids {
             display: flex; align-items: center; gap: 12px; background: rgba(255, 255, 255, 0.06); border: 1px solid var(--border-color); padding: 6px 16px; border-radius: 50px; font-family: 'Roboto Mono', monospace; font-size: 0.85rem; color: var(--text-secondary); transition: 0.3s;
         }
@@ -69,52 +83,53 @@
 
         /* SIDEBAR */
         .sidebar {
-            width: 300px; background: var(--panel-bg); backdrop-filter: var(--glass); border-right: 1px solid var(--border-color); padding: 20px; display: flex; flex-direction: column; gap: 20px; overflow-y: auto; flex-shrink: 0;
+            width: 320px; background: var(--panel-bg); backdrop-filter: var(--glass); border-right: 1px solid var(--border-color); padding: 25px; display: flex; flex-direction: column; gap: 25px; overflow-y: auto; flex-shrink: 0;
         }
 
-        h3 { font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 10px; border-bottom: 1px solid var(--border-color); padding-bottom: 5px; }
+        h3 { font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 12px; border-bottom: 1px solid var(--border-color); padding-bottom: 5px; }
 
         .control-group { margin-bottom: 5px; }
-        .label-row { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.85rem; color: #ddd; }
+        .label-row { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 0.9rem; color: #eee; }
         .val-display { font-family: 'Roboto Mono', monospace; color: var(--accent-color); font-weight: bold; }
 
-        input[type=range] { -webkit-appearance: none; width: 100%; height: 5px; background: rgba(255,255,255,0.15); border-radius: 5px; outline: none; }
-        input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; background: var(--accent-color); border-radius: 50%; cursor: pointer; transition: transform 0.2s; margin-top: -5px; }
-        input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.2); }
+        input[type=range] { -webkit-appearance: none; width: 100%; height: 6px; background: rgba(255,255,255,0.1); border-radius: 5px; outline: none; }
+        input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; background: var(--accent-color); border-radius: 50%; cursor: pointer; transition: transform 0.2s; margin-top: -6px; }
+        input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.1); box-shadow: 0 0 10px var(--accent-glow); }
 
-        .color-row { display: flex; gap: 8px; }
-        .color-dot { width: 24px; height: 24px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; transition: all 0.3s; }
-        .color-dot.active { border-color: white; transform: scale(1.2); box-shadow: 0 0 8px rgba(255,255,255,0.4); }
+        .color-row { display: flex; gap: 10px; }
+        .color-dot { width: 26px; height: 26px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; transition: all 0.3s; }
+        .color-dot.active { border-color: white; transform: scale(1.2); box-shadow: 0 0 10px rgba(255,255,255,0.3); }
 
-        .btn { width: 100%; padding: 12px; border: none; border-radius: 6px; font-family: 'Outfit', sans-serif; font-weight: 600; cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 0.9rem; }
-        .btn-primary { background: var(--accent-color); color: #000; box-shadow: 0 4px 15px var(--accent-glow); margin-bottom: 8px; }
+        .btn { width: 100%; padding: 14px; border: none; border-radius: 8px; font-family: 'Outfit', sans-serif; font-weight: 600; cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 0.95rem; }
+        .btn-primary { background: var(--accent-color); color: #000; box-shadow: 0 4px 20px var(--accent-glow); margin-bottom: 10px; }
         .btn-primary:active { transform: scale(0.98); }
-        .btn-outline { background: transparent; border: 1px solid var(--border-color); color: var(--text-secondary); font-size: 0.8rem; }
+        .btn-outline { background: transparent; border: 1px solid var(--border-color); color: var(--text-secondary); font-size: 0.85rem; }
         .btn-outline:hover { border-color: var(--text-primary); color: var(--text-primary); background: rgba(255,255,255,0.05); }
 
-        .presets-grid { display: flex; flex-direction: column; gap: 8px; }
+        .presets-grid { display: flex; flex-direction: column; gap: 10px; }
 
         /* VIZ AREA */
-        .viz-area { flex: 1; position: relative; background-color: #080808; overflow: hidden; background: linear-gradient(to bottom, #080808 90%, #111 100%); }
+        .viz-area { flex: 1; position: relative; background-color: #080808; overflow: hidden; background: radial-gradient(circle at bottom left, #111, #050505); }
 
         .hud-overlay {
-            position: absolute; top: 20px; left: 20px; background: rgba(10, 10, 12, 0.9); border: 1px solid var(--border-color); padding: 15px; border-radius: 8px; font-family: 'Roboto Mono', monospace; font-size: 0.8rem; color: var(--text-secondary); pointer-events: none; backdrop-filter: blur(5px); min-width: 180px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            position: absolute; top: 20px; left: 20px; background: rgba(10, 10, 12, 0.95); border: 1px solid var(--border-color); padding: 15px; border-radius: 8px; font-family: 'Roboto Mono', monospace; font-size: 0.8rem; color: var(--text-secondary); pointer-events: none; backdrop-filter: blur(5px); min-width: 180px; box-shadow: 0 10px 40px rgba(0,0,0,0.6);
         }
-        .hud-row { display: flex; justify-content: space-between; margin-bottom: 4px; }
+        .hud-row { display: flex; justify-content: space-between; margin-bottom: 6px; }
         .hud-val { color: var(--text-primary); font-weight: 600; }
         
-        .scale-info { position: absolute; bottom: 10px; right: 20px; color: rgba(255,255,255,0.2); font-size: 0.75rem; font-family: 'Roboto Mono', monospace; }
+        .scale-info { position: absolute; bottom: 15px; right: 25px; color: rgba(255,255,255,0.2); font-size: 0.75rem; font-family: 'Roboto Mono', monospace; letter-spacing: 1px; }
 
         /* DATA TABLE */
-        .data-panel { height: 200px; background: var(--panel-bg); border-top: 1px solid var(--border-color); display: flex; flex-direction: column; backdrop-filter: var(--glass); }
+        .data-panel { height: 220px; background: var(--panel-bg); border-top: 1px solid var(--border-color); display: flex; flex-direction: column; backdrop-filter: var(--glass); }
         .table-wrap { overflow: auto; flex: 1; }
         table { width: 100%; border-collapse: collapse; font-size: 0.85rem; text-align: left; }
-        thead { position: sticky; top: 0; z-index: 5; background: #151518; }
-        th { padding: 10px 15px; color: var(--text-secondary); font-weight: 500; font-size: 0.7rem; text-transform: uppercase; border-bottom: 2px solid var(--border-color); white-space: nowrap; }
-        td { padding: 8px 15px; border-bottom: 1px solid var(--border-color); color: var(--text-primary); font-family: 'Roboto Mono', monospace; white-space: nowrap; }
-        tr:nth-child(even) { background: rgba(255,255,255,0.01); }
+        thead { position: sticky; top: 0; z-index: 5; background: #1a1a20; }
+        th { padding: 12px 20px; color: var(--text-secondary); font-weight: 500; font-size: 0.7rem; text-transform: uppercase; border-bottom: 2px solid var(--border-color); white-space: nowrap; letter-spacing: 0.5px; }
+        td { padding: 10px 20px; border-bottom: 1px solid rgba(255,255,255,0.05); color: var(--text-primary); font-family: 'Roboto Mono', monospace; white-space: nowrap; }
+        tr:nth-child(even) { background: rgba(255,255,255,0.02); }
+        
         canvas { display: block; width: 100%; height: 100%; }
-
+        
         @media (max-width: 900px) {
             main { flex-direction: column; height: auto; }
             .sidebar { width: 100%; height: auto; border-right: none; }
@@ -128,11 +143,11 @@
     <header>
         <div class="brand">
             <i class="fa-solid fa-bolt"></i> BASEL.EXPERT 
-            <span class="brand-subtitle">| Physics Engine</span>
+            <span class="brand-subtitle">| EUI PHYSICS PROJECT</span>
         </div>
         
         <div class="project-badge">
-            <div class="uni-tag">EUI PHYSICS PROJECT</div>
+            <div class="uni-tag">Students' IDs</div>
             <div class="student-ids">
                 <span><i class="fa-regular fa-user" style="font-size:0.8rem"></i> 25-104097</span>
                 <span class="divider"></span>
@@ -144,27 +159,27 @@
     <main>
         <aside class="sidebar">
             <div>
-                <h3>Parameters</h3>
+                <h3>Initial Conditions</h3>
                 <div class="control-group">
-                    <div class="label-row"><span>Initial Velocity (v₀)</span> <span id="v-disp" class="val-display">80 m/s</span></div>
+                    <div class="label-row"><span>Velocity (v₀)</span> <span id="v-disp" class="val-display">80 m/s</span></div>
                     <input type="range" id="v-slider" min="10" max="180" value="80">
                 </div>
-                <div class="control-group" style="margin-top:15px;">
-                    <div class="label-row"><span>Launch Angle (θ)</span> <span id="a-disp" class="val-display">45°</span></div>
+                <div class="control-group" style="margin-top:20px;">
+                    <div class="label-row"><span>Angle (θ)</span> <span id="a-disp" class="val-display">45°</span></div>
                     <input type="range" id="a-slider" min="1" max="89" value="45">
                 </div>
             </div>
 
             <div style="margin-top: 10px;">
-                <h3>Simulation Speed</h3>
+                <h3>Time Control</h3>
                 <div class="control-group">
-                    <div class="label-row"><span>Time Dilation</span> <span id="s-disp" class="val-display">1.0x</span></div>
-                    <input type="range" id="s-slider" min="0.1" max="2.0" step="0.1" value="1.0">
+                    <div class="label-row"><span>Sim Speed</span> <span id="s-disp" class="val-display">1.0x</span></div>
+                    <input type="range" id="s-slider" min="0.1" max="3.0" step="0.1" value="1.0">
                 </div>
             </div>
 
             <div>
-                <h3>Trace Color</h3>
+                <h3>Trajectory Color</h3>
                 <div class="color-row">
                     <div class="color-dot active" style="background:#60a5fa" data-c="#60a5fa"></div>
                     <div class="color-dot" style="background:#f43f5e" data-c="#f43f5e"></div>
@@ -174,20 +189,20 @@
                 </div>
             </div>
 
-            <button id="btn-launch" class="btn btn-primary"><i class="fa-solid fa-play"></i> LAUNCH</button>
-            <button id="btn-clear" class="btn btn-outline"><i class="fa-solid fa-rotate-right"></i> Reset</button>
+            <button id="btn-launch" class="btn btn-primary"><i class="fa-solid fa-play"></i> LAUNCH PROJECTILE</button>
+            <button id="btn-clear" class="btn btn-outline"><i class="fa-solid fa-trash-can"></i> Clear All</button>
 
-            <div style="margin-top: 15px;">
-                <h3>Educational Presets</h3>
+            <div style="margin-top: 20px;">
+                <h3>Comparison Presets</h3>
                 <div class="presets-grid">
                     <button class="btn btn-outline" onclick="loadPreset('classic')">
-                        <i class="fa-solid fa-layer-group"></i> Angle Effect (30°, 45°, 60°)
+                        <i class="fa-solid fa-layer-group"></i> 30° vs 45° vs 60°
                     </button>
                     <button class="btn btn-outline" onclick="loadPreset('complementary')">
-                        <i class="fa-solid fa-check-double"></i> Complementary (15° vs 75°)
+                        <i class="fa-solid fa-check-double"></i> Complementary (15° & 75°)
                     </button>
                     <button class="btn btn-outline" onclick="loadPreset('velocity')">
-                        <i class="fa-solid fa-forward"></i> Velocity Effect (Speed Up)
+                        <i class="fa-solid fa-forward"></i> Velocity Steps (+50 m/s)
                     </button>
                 </div>
             </div>
@@ -200,24 +215,23 @@
                     <div class="hud-row"><span>Time (t):</span> <span class="hud-val" id="hud-t">0.00 s</span></div>
                     <div class="hud-row"><span>Range (x):</span> <span class="hud-val" id="hud-x">0.00 m</span></div>
                     <div class="hud-row"><span>Height (y):</span> <span class="hud-val" id="hud-y">0.00 m</span></div>
-                    <div class="hud-row" style="margin-top:5px; padding-top:5px; border-top:1px solid rgba(255,255,255,0.1)">
-                        <span id="hud-status" style="color:#34d399">READY</span>
+                    <div class="hud-row" style="margin-top:8px; padding-top:8px; border-top:1px solid rgba(255,255,255,0.1)">
+                        <span id="hud-status" style="color:#34d399; font-size:0.75rem; letter-spacing:1px;">READY</span>
                     </div>
                 </div>
-                <div class="scale-info" id="scale-info">Auto-Zoom Active</div>
+                <div class="scale-info" id="scale-info">Scale: Auto-Calibrated</div>
             </div>
             <div class="data-panel">
                 <div class="table-wrap">
                     <table>
                         <thead>
                             <tr>
-                                <th>ID</th>
-                                <th></th>
+                                <th>Trace</th>
                                 <th>V0 (m/s)</th>
-                                <th>Angle</th>
-                                <th>Time (s)</th>
-                                <th>Max H (m)</th>
-                                <th>Range (m)</th>
+                                <th>Angle (°)</th>
+                                <th>Flight Time (s)</th>
+                                <th>Max Height (m)</th>
+                                <th>Total Range (m)</th>
                             </tr>
                         </thead>
                         <tbody id="data-body"></tbody>
@@ -267,107 +281,117 @@
                 this.id = id;
                 this.v0 = v0;
                 this.angle = angle;
-                this.rad = angle * Math.PI / 180;
                 this.color = color;
-                this.t = 0;
+                
+                // EXACT Physics Calculations
+                this.rad = angle * Math.PI / 180;
                 this.vx = v0 * Math.cos(this.rad);
                 this.vy0 = v0 * Math.sin(this.rad);
+                
+                this.totalTime = (2 * this.vy0) / G;
+                this.maxHeight = (Math.pow(this.vy0, 2)) / (2 * G);
+                this.maxRange = this.vx * this.totalTime;
+
+                this.t = 0;
                 this.x = 0;
                 this.y = 0;
                 this.landed = false;
-                this.path = [];
-                this.theoTime = (2 * this.vy0) / G;
-                this.theoRange = (Math.pow(this.v0, 2) * Math.sin(2 * this.rad)) / G;
-                this.theoHeight = Math.pow(this.vy0, 2) / (2 * G);
+                this.path = [{x:0, y:0}];
             }
 
             update(dt) {
                 if (this.landed) return;
+
                 this.t += dt;
-                this.x = this.vx * this.t;
-                this.y = (this.vy0 * this.t) - (0.5 * G * this.t * this.t);
-                if (this.y <= 0) {
+
+                if (this.t >= this.totalTime) {
+                    this.t = this.totalTime;
+                    this.x = this.maxRange;
                     this.y = 0;
                     this.landed = true;
-                    this.x = this.theoRange;
-                    this.t = this.theoTime;
+                } else {
+                    this.x = this.vx * this.t;
+                    this.y = (this.vy0 * this.t) - (0.5 * G * this.t * this.t);
                 }
+                
                 this.path.push({x: this.x, y: this.y});
             }
 
             draw() {
                 const s = dynamicScale;
-                
-                // Trail
+                const groundY = height;
+
                 if (this.path.length > 1) {
                     ctx.beginPath();
-                    ctx.moveTo(0, height); 
-                    for (let i = 0; i < this.path.length; i++) {
-                        const p = this.path[i];
-                        ctx.lineTo(p.x * s, height - (p.y * s));
+                    ctx.moveTo(0, groundY);
+                    for (let point of this.path) {
+                        ctx.lineTo(point.x * s, groundY - (point.y * s));
                     }
                     ctx.strokeStyle = this.color;
-                    ctx.lineWidth = 2;
+                    ctx.lineWidth = 2.5;
+                    ctx.lineCap = 'round';
                     ctx.stroke();
                 }
 
                 if (this.landed) {
-                    const lx = this.x * s;
-                    // --- NEW ELEGANT MARKER ---
-                    const stemHeight = 35;
-                    const boxW = 55;
-                    const boxH = 20;
-
-                    // 1. Vertical Stem (Dashed)
+                    const finalX = this.maxRange * s;
+                    const stemH = 40;
+                    
                     ctx.beginPath();
-                    ctx.setLineDash([2, 2]);
-                    ctx.moveTo(lx, height);
-                    ctx.lineTo(lx, height - stemHeight);
+                    ctx.setLineDash([3, 3]);
+                    ctx.moveTo(finalX, groundY);
+                    ctx.lineTo(finalX, groundY - stemH);
                     ctx.strokeStyle = this.color;
                     ctx.lineWidth = 1;
                     ctx.stroke();
                     ctx.setLineDash([]);
 
-                    // 2. Impact Dot
                     ctx.beginPath();
-                    ctx.arc(lx, height, 3, 0, Math.PI*2);
+                    ctx.arc(finalX, groundY, 3, 0, Math.PI*2);
                     ctx.fillStyle = this.color;
                     ctx.fill();
 
-                    // 3. Info Badge (Floating Rectangle)
-                    const bx = lx - (boxW/2);
-                    const by = height - stemHeight - boxH;
-                    
-                    ctx.fillStyle = this.color; // Background same as trace
-                    ctx.beginPath();
-                    // Simple round rect simulation
-                    ctx.roundRect(bx, by, boxW, boxH, 4);
-                    ctx.fill();
-
-                    // 4. Text inside Badge
-                    ctx.fillStyle = "#000"; // Contrast text
-                    ctx.font = "bold 11px Roboto Mono";
-                    ctx.textAlign = "center";
-                    ctx.textBaseline = "middle";
-                    ctx.fillText(this.x.toFixed(1) + "m", lx, by + (boxH/2));
+                    drawBadge(ctx, finalX, groundY - stemH, this.maxRange.toFixed(2) + 'm', this.color);
 
                 } else {
-                    // Ball in flight
                     const cx = this.x * s;
-                    const cy = height - (this.y * s);
+                    const cy = groundY - (this.y * s);
+                    
                     ctx.beginPath();
                     ctx.arc(cx, cy, 6, 0, Math.PI*2);
                     ctx.fillStyle = '#fff';
                     ctx.fill();
+                    
                     ctx.shadowBlur = 15;
                     ctx.shadowColor = this.color;
                     ctx.beginPath();
                     ctx.arc(cx, cy, 6, 0, Math.PI*2);
                     ctx.fill();
                     ctx.shadowBlur = 0;
+
                     updateHUD(this);
                 }
             }
+        }
+
+        function drawBadge(ctx, x, y, text, color) {
+            const pad = 6;
+            ctx.font = "bold 11px Roboto Mono";
+            const metrics = ctx.measureText(text);
+            const w = metrics.width + (pad * 2);
+            const h = 22;
+            const bx = x - w/2;
+            const by = y - h;
+
+            ctx.fillStyle = color;
+            ctx.beginPath();
+            ctx.roundRect(bx, by, w, h, 4);
+            ctx.fill();
+
+            ctx.fillStyle = "#000";
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            ctx.fillText(text, x, by + h/2 + 1);
         }
 
         function updateHUD(p) {
@@ -383,14 +407,19 @@
                 dynamicScale = 4;
                 return;
             }
-            let maxX = 0; let maxY = 0;
+            let maxRange = 0; let maxH = 0;
+            
             projectiles.forEach(p => {
-                if (p.theoRange > maxX) maxX = p.theoRange;
-                if (p.theoHeight > maxY) maxY = p.theoHeight;
+                if (p.maxRange > maxRange) maxRange = p.maxRange;
+                if (p.maxHeight > maxH) maxH = p.maxHeight;
             });
-            maxX = Math.max(maxX, 50); maxY = Math.max(maxY, 20);
-            maxX *= 1.2; maxY *= 1.2;
-            const sx = width / maxX; const sy = height / maxY;
+
+            maxRange = Math.max(maxRange * 1.1, 50);
+            maxH = Math.max(maxH * 1.2, 20);
+
+            const sx = width / maxRange; 
+            const sy = height / maxH;
+            
             dynamicScale = Math.min(sx, sy);
             els.scaleInfo.innerText = `Scale: 1m = ${dynamicScale.toFixed(2)}px`;
         }
@@ -398,16 +427,18 @@
         function launch(v0, angle, color) {
             const p = new Projectile(projectiles.length + 1, v0, angle, color);
             projectiles.push(p);
+            
             const row = `<tr>
-                <td style="color:#666">#${p.id}</td>
-                <td><span style="display:block;width:10px;height:10px;background:${p.color};border-radius:50%"></span></td>
+                <td><span style="display:inline-block;width:12px;height:12px;background:${p.color};border-radius:50%;margin-right:8px;vertical-align:middle"></span> #${p.id}</td>
                 <td>${p.v0}</td>
                 <td>${p.angle}°</td>
-                <td>${p.theoTime.toFixed(2)}</td>
-                <td>${p.theoHeight.toFixed(2)}</td>
-                <td style="color:${p.color};font-weight:bold">${p.theoRange.toFixed(2)}</td>
+                <td>${p.totalTime.toFixed(3)}</td>
+                <td>${p.maxHeight.toFixed(3)}</td>
+                <td style="color:${p.color};font-weight:700">${p.maxRange.toFixed(3)}</td>
             </tr>`;
+            
             els.tableBody.insertAdjacentHTML('afterbegin', row);
+            
             if (!animationId) animate();
         }
 
@@ -422,13 +453,23 @@
 
         function drawGrid() {
             const s = dynamicScale;
-            const step = 10 * s; 
+            let gridStep = 10;
+            if (s < 2) gridStep = 50;
+            if (s < 0.5) gridStep = 100;
+            const pixelStep = gridStep * s; 
+            
             ctx.beginPath();
-            ctx.strokeStyle = 'rgba(255,255,255,0.05)';
+            ctx.strokeStyle = 'rgba(255,255,255,0.04)';
             ctx.lineWidth = 1;
-            for(let x=0; x<width; x+=step) { ctx.moveTo(x, 0); ctx.lineTo(x, height); }
-            for(let y=height; y>0; y-=step) { ctx.moveTo(0, y); ctx.lineTo(width, y); }
+            
+            for(let x=0; x<width; x+=pixelStep) { 
+                ctx.moveTo(x, 0); ctx.lineTo(x, height); 
+            }
+            for(let y=height; y>0; y-=pixelStep) { 
+                ctx.moveTo(0, y); ctx.lineTo(width, y); 
+            }
             ctx.stroke();
+
             ctx.beginPath();
             ctx.strokeStyle = '#fff';
             ctx.lineWidth = 2;
@@ -441,17 +482,21 @@
             calculateScale();
             ctx.clearRect(0, 0, width, height);
             drawGrid();
+
             let active = false;
-            const dt = 0.05 * timeMultiplier; 
+            const dt = 0.016 * timeMultiplier; 
+
             projectiles.forEach(p => {
                 p.update(dt);
                 p.draw();
                 if (!p.landed) active = true;
             });
+
             if (!active && projectiles.length > 0) {
-                els.hudStatus.innerText = "FINISHED";
+                els.hudStatus.innerText = "COMPLETE";
                 els.hudStatus.style.color = "#94a3b8";
             }
+            
             animationId = requestAnimationFrame(animate);
         }
 
@@ -485,7 +530,7 @@
             clearSim();
             const set = PRESETS[name];
             set.forEach((shot, i) => {
-                setTimeout(() => launch(shot.v, shot.a, shot.c), i * 300);
+                setTimeout(() => launch(shot.v, shot.a, shot.c), i * 350);
             });
         };
 
