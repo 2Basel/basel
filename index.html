@@ -3,10 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Basel.expert | Coming Soon</title>
+    
+    <title>Basel Abdo | Developer</title>
+    <meta name="description" content="Basel Abdo - Student Developer portfolio coming soon.">
+    <meta property="og:title" content="Basel Abdo | Developer">
+    <meta property="og:description" content="Building the future, one line of code at a time.">
+    <meta property="og:image" content="https://basel.expert/og-image.jpg"> <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
         * {
@@ -16,7 +24,7 @@
         }
 
         body {
-            background-color: #050505; /* أسود فحمي هادئ */
+            background-color: #050505;
             color: #ffffff;
             font-family: 'Outfit', sans-serif;
             height: 100vh;
@@ -27,7 +35,7 @@
             position: relative;
         }
 
-        /* كرة الضوء التي ستلحق بالماوس (التفاعل الهادئ) */
+        /* تحسين الأداء للإضاءة */
         .cursor-glow {
             position: absolute;
             width: 400px;
@@ -39,9 +47,9 @@
             z-index: 0;
             filter: blur(50px); 
             transition: width 0.3s, height 0.3s; 
+            will-change: transform, left, top; /* تحسين الأداء */
         }
 
-        /* تأثير ضوئي ثانوي ثابت في الخلفية للجمال */
         .static-glow {
             position: absolute;
             top: 10%;
@@ -60,7 +68,7 @@
             50% { transform: scale(1.2); opacity: 0.8; }
         }
 
-        /* كارت الزجاج (Glassmorphism) */
+        /* كارت الزجاج مع أنيميشن الدخول */
         .glass-card {
             position: relative;
             z-index: 10;
@@ -74,7 +82,19 @@
             max-width: 450px;
             width: 90%;
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
-            transition: transform 0.3s ease;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+            
+            /* أنيميشن الظهور */
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1s ease-out forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .glass-card:hover {
@@ -82,13 +102,13 @@
             border-color: rgba(255, 255, 255, 0.2);
         }
 
-        /* النصوص */
         .icon {
             font-size: 3rem;
             margin-bottom: 20px;
             background: linear-gradient(to right, #60a5fa, #a78bfa);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            display: inline-block; /* مهم عشان التدرج يشتغل صح مع بعض المتصفحات */
         }
 
         h1 {
@@ -111,14 +131,13 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 10px;
+            gap: 15px; /* زيادة المسافة شوية */
         }
 
         .divider {
-            width: 40px;
-            height: 2px;
-            background: #334155;
-            border-radius: 2px;
+            width: 30px;
+            height: 1px; /* أنحف شوية أشيك */
+            background: linear-gradient(90deg, transparent, #334155, transparent); /* تدرج للخط */
         }
 
         p {
@@ -128,7 +147,6 @@
             margin-bottom: 40px;
         }
 
-        /* الأزرار */
         .social-links {
             display: flex;
             justify-content: center;
@@ -137,8 +155,8 @@
 
         .btn {
             text-decoration: none;
-            color: #e2e8f0;
-            font-size: 1.2rem;
+            color: #94a3b8; /* لون أهدى للأيقونات */
+            font-size: 1.3rem;
             width: 50px;
             height: 50px;
             border-radius: 50%;
@@ -147,14 +165,15 @@
             align-items: center;
             justify-content: center;
             border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* تأثير ارتداد خفيف */
         }
 
         .btn:hover {
-            background: rgba(255, 255, 255, 0.15);
-            transform: scale(1.1);
+            background: rgba(255, 255, 255, 0.1);
+            transform: scale(1.15);
+            color: #ffffff;
             border-color: #60a5fa;
-            box-shadow: 0 0 15px rgba(96, 165, 250, 0.3);
+            box-shadow: 0 0 20px rgba(96, 165, 250, 0.2);
         }
 
     </style>
@@ -165,7 +184,8 @@
     <div class="static-glow"></div>
 
     <div class="glass-card">
-        <div class="icon">⚡</div>
+        <div class="icon">
+            <i class="fa-solid fa-bolt"></i> </div>
         <h1>Basel Abdo</h1>
         
         <div class="role">
@@ -175,31 +195,47 @@
         </div>
 
         <p>
-            This space is being engineered for the future.
+            Building digital experiences.<br>This space is being engineered for the future.
         </p>
 
         <div class="social-links">
-            <a href="mailto:contact@basel.expert" class="btn" title="Email Me">✉️</a>
-            <a href="https://www.linkedin.com/in/2basel/" class="btn" target="_blank" title="LinkedIn">👔</a>
-            <a href="https://github.com/2basel" class="btn" target="_blank" title="GitHub">💻</a>
+            <a href="mailto:contact@basel.expert" class="btn" title="Email Me">
+                <i class="fa-regular fa-envelope"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/2basel/" class="btn" target="_blank" title="LinkedIn">
+                <i class="fa-brands fa-linkedin-in"></i>
+            </a>
+            <a href="https://github.com/2basel" class="btn" target="_blank" title="GitHub">
+                <i class="fa-brands fa-github"></i>
+            </a>
         </div>
     </div>
 
     <script>
-        // كود تحريك الضوء خلف الماوس بنعومة
         const glow = document.getElementById('glow');
         
+        // استخدام requestAnimationFrame لضمان أفضل أداء
+        let mouseX = 0, mouseY = 0;
+        let glowX = 0, glowY = 0;
+
         document.addEventListener('mousemove', (e) => {
-            const mouseX = e.clientX;
-            const mouseY = e.clientY;
-            
-            requestAnimationFrame(() => {
-                glow.style.left = mouseX + 'px';
-                glow.style.top = mouseY + 'px';
-            });
+            mouseX = e.clientX;
+            mouseY = e.clientY;
         });
 
-        // تأثير إضافي: تكبير الضوء عند الضغط
+        // دالة تحريك ناعمة جداً
+        function animateGlow() {
+            // معادلة للتحرك بنعومة (Lerp)
+            glowX += (mouseX - glowX) * 0.1;
+            glowY += (mouseY - glowY) * 0.1;
+
+            glow.style.left = glowX + 'px';
+            glow.style.top = glowY + 'px';
+
+            requestAnimationFrame(animateGlow);
+        }
+        animateGlow();
+
         document.addEventListener('mousedown', () => {
             glow.style.transform = 'translate(-50%, -50%) scale(1.2)';
         });
