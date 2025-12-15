@@ -2,9 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>EUI Physics Project | Basel.Expert</title>
     
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&family=Roboto+Mono:wght@400;600&display=swap" rel="stylesheet">
@@ -13,7 +15,7 @@
     <style>
         :root {
             --bg-color: #050505;
-            --panel-bg: rgba(20, 20, 25, 0.9);
+            --panel-bg: rgba(20, 20, 25, 0.95);
             --text-primary: #ffffff;
             --text-secondary: #94a3b8;
             --accent-color: #60a5fa;
@@ -22,28 +24,38 @@
             --glass: blur(12px);
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: var(--bg-color); }
         ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
-        body { background-color: var(--bg-color); color: var(--text-primary); font-family: 'Outfit', sans-serif; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
+        
+        body { 
+            background-color: var(--bg-color); 
+            color: var(--text-primary); 
+            font-family: 'Outfit', sans-serif; 
+            height: 100vh; 
+            display: flex; 
+            flex-direction: column; 
+            overflow: hidden; /* Desktop: No scroll */
+        }
 
         /* HEADER */
-        header { height: 70px; padding: 0 30px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); background: rgba(5, 5, 5, 0.95); z-index: 20; }
-        .brand { font-weight: 700; font-size: 1.3rem; display: flex; align-items: center; gap: 10px; letter-spacing: -0.5px; color: white; }
+        header { height: 70px; padding: 0 30px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); background: rgba(5, 5, 5, 0.95); z-index: 20; flex-shrink: 0; }
+        .brand { font-weight: 700; font-size: 1.3rem; display: flex; align-items: center; gap: 10px; letter-spacing: -0.5px; color: white; white-space: nowrap; }
         .brand i { color: var(--accent-color); font-size: 1.1rem; }
         .brand-subtitle { font-weight: 300; opacity: 0.8; font-size: 0.9rem; margin-left: 5px; border-left: 1px solid #555; padding-left: 10px; color: var(--text-secondary); letter-spacing: 1px; }
         
-        /* STUDENT IDs BADGE (Centered) */
+        /* STUDENT IDs BADGE */
         .project-badge { display: flex; flex-direction: column; align-items: center; justify-content: center; }
         .uni-tag { font-size: 0.65rem; color: var(--accent-color); font-weight: 700; letter-spacing: 2px; margin-bottom: 5px; text-transform: uppercase; text-shadow: 0 0 10px rgba(96, 165, 250, 0.4); }
-        .student-ids { display: flex; align-items: center; gap: 12px; background: rgba(255, 255, 255, 0.06); border: 1px solid var(--border-color); padding: 6px 16px; border-radius: 50px; font-family: 'Roboto Mono', monospace; font-size: 0.85rem; color: var(--text-secondary); transition: 0.3s; }
-        .student-ids:hover { background: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.3); color: white; }
+        .student-ids { display: flex; align-items: center; gap: 12px; background: rgba(255, 255, 255, 0.06); border: 1px solid var(--border-color); padding: 6px 16px; border-radius: 50px; font-family: 'Roboto Mono', monospace; font-size: 0.85rem; color: var(--text-secondary); transition: 0.3s; white-space: nowrap; }
         .divider { height: 14px; width: 1px; background: rgba(255,255,255,0.2); }
 
-        /* MAIN LAYOUT & SIDEBAR */
-        main { flex: 1; display: flex; height: calc(100vh - 70px); }
-        .sidebar { width: 320px; background: var(--panel-bg); backdrop-filter: var(--glass); border-right: 1px solid var(--border-color); padding: 25px; display: flex; flex-direction: column; gap: 25px; overflow-y: auto; flex-shrink: 0; }
+        /* MAIN LAYOUT */
+        main { flex: 1; display: flex; height: calc(100vh - 70px); overflow: hidden; }
+        
+        /* SIDEBAR */
+        .sidebar { width: 320px; background: var(--panel-bg); backdrop-filter: var(--glass); border-right: 1px solid var(--border-color); padding: 25px; display: flex; flex-direction: column; gap: 20px; overflow-y: auto; flex-shrink: 0; z-index: 10; }
         h3 { font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 12px; border-bottom: 1px solid var(--border-color); padding-bottom: 5px; }
         
         /* CONTROLS */
@@ -51,40 +63,66 @@
         .label-row { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 0.9rem; color: #eee; }
         .val-display { font-family: 'Roboto Mono', monospace; color: var(--accent-color); font-weight: bold; }
         input[type=range] { -webkit-appearance: none; width: 100%; height: 6px; background: rgba(255,255,255,0.1); border-radius: 5px; outline: none; }
-        input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; background: var(--accent-color); border-radius: 50%; cursor: pointer; transition: transform 0.2s; margin-top: -6px; }
-        input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.1); box-shadow: 0 0 10px var(--accent-glow); }
-        .color-row { display: flex; gap: 10px; }
-        .color-dot { width: 26px; height: 26px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; transition: all 0.3s; }
-        .color-dot.active { border-color: white; transform: scale(1.2); box-shadow: 0 0 10px rgba(255,255,255,0.3); }
+        input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 22px; height: 22px; background: var(--accent-color); border-radius: 50%; cursor: pointer; transition: transform 0.2s; margin-top: -8px; box-shadow: 0 2px 6px rgba(0,0,0,0.5); }
+        
+        .color-row { display: flex; gap: 15px; justify-content: center; margin-top: 10px; }
+        .color-dot { width: 32px; height: 32px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; transition: all 0.3s; }
+        .color-dot.active { border-color: white; transform: scale(1.15); box-shadow: 0 0 12px rgba(255,255,255,0.4); }
+        
         .btn { width: 100%; padding: 14px; border: none; border-radius: 8px; font-family: 'Outfit', sans-serif; font-weight: 600; cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 0.95rem; }
         .btn-primary { background: var(--accent-color); color: #000; box-shadow: 0 4px 20px var(--accent-glow); margin-bottom: 10px; }
-        .btn-primary:active { transform: scale(0.98); }
+        .btn-primary:active { transform: scale(0.96); }
         .btn-outline { background: transparent; border: 1px solid var(--border-color); color: var(--text-secondary); font-size: 0.85rem; }
-        .btn-outline:hover { border-color: var(--text-primary); color: var(--text-primary); background: rgba(255,255,255,0.05); }
-        .presets-grid { display: flex; flex-direction: column; gap: 10px; }
+        .presets-grid { display: grid; grid-template-columns: 1fr; gap: 8px; }
 
-        /* VIZ AREA & HUD */
-        .viz-area { flex: 1; position: relative; background-color: #080808; overflow: hidden; background: radial-gradient(circle at bottom left, #111, #050505); }
-        .hud-overlay { position: absolute; top: 20px; left: 20px; background: rgba(10, 10, 12, 0.95); border: 1px solid var(--border-color); padding: 15px; border-radius: 8px; font-family: 'Roboto Mono', monospace; font-size: 0.8rem; color: var(--text-secondary); pointer-events: none; backdrop-filter: blur(5px); min-width: 180px; box-shadow: 0 10px 40px rgba(0,0,0,0.6); }
-        .hud-row { display: flex; justify-content: space-between; margin-bottom: 6px; }
+        /* VISUALIZATION */
+        .right-col { flex: 1; display: flex; flex-direction: column; min-width: 0; position: relative; }
+        .viz-area { flex: 1; position: relative; background-color: #080808; overflow: hidden; background: radial-gradient(circle at bottom left, #1a1a1a, #050505); }
+        .hud-overlay { position: absolute; top: 15px; left: 15px; background: rgba(10, 10, 12, 0.85); border: 1px solid var(--border-color); padding: 12px; border-radius: 8px; font-family: 'Roboto Mono', monospace; font-size: 0.75rem; color: var(--text-secondary); pointer-events: none; backdrop-filter: blur(4px); min-width: 150px; z-index: 5; }
+        .hud-row { display: flex; justify-content: space-between; margin-bottom: 4px; }
         .hud-val { color: var(--text-primary); font-weight: 600; }
-        .scale-info { position: absolute; bottom: 15px; right: 25px; color: rgba(255,255,255,0.2); font-size: 0.75rem; font-family: 'Roboto Mono', monospace; letter-spacing: 1px; }
+        .scale-info { position: absolute; bottom: 10px; right: 15px; color: rgba(255,255,255,0.3); font-size: 0.7rem; font-family: 'Roboto Mono', monospace; }
 
         /* DATA TABLE */
-        .data-panel { height: 220px; background: var(--panel-bg); border-top: 1px solid var(--border-color); display: flex; flex-direction: column; backdrop-filter: var(--glass); }
+        .data-panel { height: 220px; background: var(--panel-bg); border-top: 1px solid var(--border-color); display: flex; flex-direction: column; }
         .table-wrap { overflow: auto; flex: 1; }
-        table { width: 100%; border-collapse: collapse; font-size: 0.85rem; text-align: left; }
-        thead { position: sticky; top: 0; z-index: 5; background: #1a1a20; }
-        th { padding: 12px 20px; color: var(--text-secondary); font-weight: 500; font-size: 0.7rem; text-transform: uppercase; border-bottom: 2px solid var(--border-color); white-space: nowrap; letter-spacing: 0.5px; }
-        td { padding: 10px 20px; border-bottom: 1px solid rgba(255,255,255,0.05); color: var(--text-primary); font-family: 'Roboto Mono', monospace; white-space: nowrap; }
+        table { width: 100%; border-collapse: collapse; font-size: 0.8rem; text-align: left; }
+        thead { position: sticky; top: 0; z-index: 5; background: #1f1f25; }
+        th { padding: 10px 15px; color: var(--text-secondary); font-weight: 500; font-size: 0.7rem; text-transform: uppercase; border-bottom: 2px solid var(--border-color); white-space: nowrap; }
+        td { padding: 8px 15px; border-bottom: 1px solid rgba(255,255,255,0.05); color: var(--text-primary); font-family: 'Roboto Mono', monospace; white-space: nowrap; }
         tr:nth-child(even) { background: rgba(255,255,255,0.02); }
         canvas { display: block; width: 100%; height: 100%; }
-        
+
+        /* ================= MOBILE OPTIMIZATION ================= */
         @media (max-width: 900px) {
-            main { flex-direction: column; height: auto; }
-            .sidebar { width: 100%; height: auto; border-right: none; }
-            .viz-area { height: 50vh; }
-            .project-badge { display: none; }
+            body { height: auto; overflow-y: auto; overflow-x: hidden; }
+            main { flex-direction: column; height: auto; overflow: visible; }
+            
+            /* Header Adjustment */
+            header { height: auto; flex-direction: column; padding: 15px 20px; gap: 12px; }
+            .brand { width: 100%; justify-content: center; }
+            .project-badge { display: flex !important; width: 100%; margin-top: 5px; }
+            
+            /* Sidebar on Mobile */
+            .sidebar { 
+                width: 100%; 
+                height: auto; 
+                border-right: none; 
+                border-bottom: 1px solid var(--border-color);
+                padding: 20px;
+                order: 1; /* Controls First? Or Canvas First? Let's keep Sidebar on top for settings */
+            }
+
+            /* Canvas Area on Mobile */
+            .right-col { height: auto; display: flex; flex-direction: column; order: 2; }
+            .viz-area { height: 50vh; min-height: 350px; border-bottom: 1px solid var(--border-color); }
+            
+            /* Table Area on Mobile */
+            .data-panel { height: 300px; }
+            
+            /* Touch Targets */
+            .btn { padding: 16px; font-size: 1rem; }
+            .presets-grid { grid-template-columns: 1fr 1fr; }
         }
     </style>
 </head>
@@ -93,13 +131,13 @@
     <header>
         <div class="brand">
             <i class="fa-solid fa-bolt"></i> BASEL.EXPERT 
-            <span class="brand-subtitle">| EUI PHYSICS PROJECT</span>
+            <span class="brand-subtitle">| EUI PHYSICS</span>
         </div>
         
         <div class="project-badge">
             <div class="uni-tag">STUDENTS' IDs</div> 
             <div class="student-ids">
-                <span><i class="fa-regular fa-user" style="font-size:0.8rem"></i> 25-104097</span>
+                <span>25-104097</span>
                 <span class="divider"></span>
                 <span>25-100589</span>
             </div>
@@ -120,7 +158,7 @@
                 </div>
             </div>
 
-            <div style="margin-top: 10px;">
+            <div style="margin-top: 5px;">
                 <h3>Time Control</h3>
                 <div class="control-group">
                     <div class="label-row"><span>Sim Speed</span> <span id="s-disp" class="val-display">1.0x</span></div>
@@ -135,41 +173,35 @@
                     <div class="color-dot" style="background:#f43f5e" data-c="#f43f5e"></div>
                     <div class="color-dot" style="background:#34d399" data-c="#34d399"></div>
                     <div class="color-dot" style="background:#fbbf24" data-c="#fbbf24"></div>
-                    <div class="color-dot" style="background:#a78bfa" data-c="#a78bfa"></div>
                 </div>
             </div>
 
-            <button id="btn-launch" class="btn btn-primary"><i class="fa-solid fa-play"></i> LAUNCH PROJECTILE</button>
-            <button id="btn-clear" class="btn btn-outline"><i class="fa-solid fa-trash-can"></i> Clear All</button>
+            <div style="margin-top: 10px; display: flex; gap: 10px; flex-direction: column;">
+                <button id="btn-launch" class="btn btn-primary"><i class="fa-solid fa-play"></i> LAUNCH</button>
+                <button id="btn-clear" class="btn btn-outline"><i class="fa-solid fa-trash-can"></i> CLEAR</button>
+            </div>
 
             <div style="margin-top: 20px;">
                 <h3>Comparison Presets</h3>
                 <div class="presets-grid">
-                    <button class="btn btn-outline" onclick="loadPreset('classic')">
-                        <i class="fa-solid fa-layer-group"></i> 30° vs 45° vs 60°
-                    </button>
-                    <button class="btn btn-outline" onclick="loadPreset('complementary')">
-                        <i class="fa-solid fa-check-double"></i> Complementary (15° & 75°)
-                    </button>
-                    <button class="btn btn-outline" onclick="loadPreset('velocity')">
-                        <i class="fa-solid fa-forward"></i> Velocity Steps (+50 m/s)
-                    </button>
+                    <button class="btn btn-outline" onclick="loadPreset('classic')">30°/45°/60°</button>
+                    <button class="btn btn-outline" onclick="loadPreset('complementary')">15° & 75°</button>
                 </div>
             </div>
         </aside>
 
-        <div style="flex:1; display:flex; flex-direction:column; min-width: 0;">
+        <div class="right-col">
             <div class="viz-area">
                 <canvas id="simCanvas"></canvas>
                 <div class="hud-overlay">
-                    <div class="hud-row"><span>Time (t):</span> <span class="hud-val" id="hud-t">0.00 s</span></div>
-                    <div class="hud-row"><span>Range (x):</span> <span class="hud-val" id="hud-x">0.00 m</span></div>
-                    <div class="hud-row"><span>Height (y):</span> <span class="hud-val" id="hud-y">0.00 m</span></div>
-                    <div class="hud-row" style="margin-top:8px; padding-top:8px; border-top:1px solid rgba(255,255,255,0.1)">
-                        <span id="hud-status" style="color:#34d399; font-size:0.75rem; letter-spacing:1px;">READY</span>
+                    <div class="hud-row"><span>Time:</span> <span class="hud-val" id="hud-t">0.00 s</span></div>
+                    <div class="hud-row"><span>Range:</span> <span class="hud-val" id="hud-x">0.00 m</span></div>
+                    <div class="hud-row"><span>Height:</span> <span class="hud-val" id="hud-y">0.00 m</span></div>
+                    <div class="hud-row" style="margin-top:6px; padding-top:6px; border-top:1px solid rgba(255,255,255,0.1)">
+                        <span id="hud-status" style="color:#34d399">READY</span>
                     </div>
                 </div>
-                <div class="scale-info" id="scale-info">Scale: Auto-Calibrated</div>
+                <div class="scale-info" id="scale-info">Scale: Auto</div>
             </div>
             <div class="data-panel">
                 <div class="table-wrap">
@@ -177,11 +209,11 @@
                         <thead>
                             <tr>
                                 <th>Trace</th>
-                                <th>V0 (m/s)</th>
-                                <th>Angle (°)</th>
-                                <th>Flight Time (s)</th>
-                                <th>Max Height (m)</th>
-                                <th>Total Range (m)</th>
+                                <th>V0</th>
+                                <th>Angle</th>
+                                <th>Time</th>
+                                <th>Height</th>
+                                <th>Range</th>
                             </tr>
                         </thead>
                         <tbody id="data-body"></tbody>
@@ -192,8 +224,8 @@
     </main>
 
     <script>
-        // THIS JAVASCRIPT SECTION HAS BEEN OBFUSCATED FOR CODE PROTECTION.
-        const g=9.81;let tM=1.0;const c=document.getElementById('simCanvas');const d=c.getContext('2d');let w,h;let dS=4;let pA=[];let aI;let cC='#60a5fa';const e={vS:document.getElementById('v-slider'),vD:document.getElementById('v-disp'),aS:document.getElementById('a-slider'),aD:document.getElementById('a-disp'),sS:document.getElementById('s-slider'),sD:document.getElementById('s-disp'),hT:document.getElementById('hud-t'),hX:document.getElementById('hud-x'),hY:document.getElementById('hud-y'),hS:document.getElementById('hud-status'),tB:document.getElementById('data-body'),sI:document.getElementById('scale-info')};function r(){w=c.offsetWidth;h=c.offsetHeight;c.width=w;c.height=h}window.addEventListener('resize',r);r();class P{constructor(id,v0,angle,color){this.id=id;this.v0=v0;this.angle=angle;this.color=color;this.rad=angle*Math.PI/180;this.vx=v0*Math.cos(this.rad);this.vy0=v0*Math.sin(this.rad);this.tT=(2*this.vy0)/g;this.mH=(Math.pow(this.vy0,2))/(2*g);this.mR=this.vx*this.tT;this.t=0;this.x=0;this.y=0;this.l=false;this.path=[{x:0,y:0}]}update(dt){if(this.l)return;this.t+=dt;if(this.t>=this.tT){this.t=this.tT;this.x=this.mR;this.y=0;this.l=true}else{this.x=this.vx*this.t;this.y=(this.vy0*this.t)-(0.5*g*this.t*this.t)}this.path.push({x:this.x,y:this.y})}draw(){const s=dS;const gY=h;if(this.path.length>1){d.beginPath();d.moveTo(0,gY);for(let p of this.path){d.lineTo(p.x*s,gY-(p.y*s))}d.strokeStyle=this.color;d.lineWidth=2.5;d.lineCap='round';d.stroke()}if(this.l){const fX=this.mR*s;const sH=40;d.beginPath();d.setLineDash([3,3]);d.moveTo(fX,gY);d.lineTo(fX,gY-sH);d.strokeStyle=this.color;d.lineWidth=1;d.stroke();d.setLineDash([]);d.beginPath();d.arc(fX,gY,3,0,Math.PI*2);d.fillStyle=this.color;d.fill();dB(d,fX,gY-sH,this.mR.toFixed(2)+'m',this.color)}else{const cX=this.x*s;const cY=gY-(this.y*s);d.beginPath();d.arc(cX,cY,6,0,Math.PI*2);d.fillStyle='#fff';d.fill();d.shadowBlur=15;d.shadowColor=this.color;d.beginPath();d.arc(cX,cY,6,0,Math.PI*2);d.fill();d.shadowBlur=0;uH(this)}}}function dB(c,x,y,t,col){const p=6;c.font="bold 11px Roboto Mono";const m=c.measureText(t);const w=m.width+p*2;const h=22;const bX=x-w/2;const bY=y-h;c.fillStyle=col;c.beginPath();c.roundRect(bX,bY,w,h,4);c.fill();c.fillStyle="#000";c.textAlign="center";c.textBaseline="middle";c.fillText(t,x,bY+h/2+1)}function uH(p){e.hT.innerText=p.t.toFixed(2)+' s';e.hX.innerText=p.x.toFixed(2)+' m';e.hY.innerText=p.y.toFixed(2)+' m';e.hS.innerText="SIMULATING...";e.hS.style.color=p.color}function cS(){if(pA.length===0){dS=4;return}let mR=0;let mH=0;pA.forEach(p=>{if(p.mR>mR)mR=p.mR;if(p.mH>mH)mH=p.mH});mR=Math.max(mR*1.1,50);mH=Math.max(mH*1.2,20);const sX=w/mR;const sY=h/mH;dS=Math.min(sX,sY);e.sI.innerText=`Scale: 1m = ${dS.toFixed(2)}px`}function l(v0,angle,color){const p=new P(pA.length+1,v0,angle,color);pA.push(p);const r=`<tr><td><span style="display:inline-block;width:12px;height:12px;background:${p.color};border-radius:50%;margin-right:8px;vertical-align:middle"></span> #${p.id}</td><td>${p.v0}</td><td>${p.angle}°</td><td>${p.tT.toFixed(3)}</td><td>${p.mH.toFixed(3)}</td><td style="color:${p.color};font-weight:700">${p.mR.toFixed(3)}</td></tr>`;e.tB.insertAdjacentHTML('afterbegin',r);if(!aI)a()}function cS_(){pA=[];e.tB.innerHTML='';d.clearRect(0,0,w,h);dG();e.hS.innerText="READY";e.hS.style.color="#fff"}function dG(){const s=dS;let gS=10;if(s<2)gS=50;if(s<0.5)gS=100;const pS=gS*s;d.beginPath();d.strokeStyle='rgba(255,255,255,0.04)';d.lineWidth=1;for(let x=0;x<w;x+=pS){d.moveTo(x,0);d.lineTo(x,h)}for(let y=h;y>0;y-=pS){d.moveTo(0,y);d.lineTo(w,y)}d.stroke();d.beginPath();d.strokeStyle='#fff';d.lineWidth=2;d.moveTo(0,h);d.lineTo(w,h);d.stroke()}function a(){r();cS();d.clearRect(0,0,w,h);dG();let act=false;const dt=0.016*tM;pA.forEach(p=>{p.update(dt);p.draw();if(!p.l)act=true});if(!act&&pA.length>0){e.hS.innerText="COMPLETE";e.hS.style.color="#94a3b8"}aI=requestAnimationFrame(a)}e.vS.oninput=(a)=>e.vD.innerText=a.target.value+' m/s';e.aS.oninput=(a)=>e.aD.innerText=a.target.value+'°';e.sS.oninput=(a)=>{tM=parseFloat(a.target.value);e.sD.innerText=tM.toFixed(1)+'x'};document.querySelectorAll('.color-dot').forEach(d=>{d.onclick=function(){document.querySelector('.color-dot.active').classList.remove('active');this.classList.add('active');cC=this.dataset.c}});document.getElementById('btn-launch').onclick=()=>l(parseInt(e.vS.value),parseInt(e.aS.value),cC);document.getElementById('btn-clear').onclick=cS_;const P_={classic:[{v:100,a:30,c:'#34d399'},{v:100,a:45,c:'#60a5fa'},{v:100,a:60,c:'#f43f5e'}],complementary:[{v:120,a:15,c:'#fbbf24'},{v:120,a:75,c:'#a78bfa'}],velocity:[{v:50,a:45,c:'#34d399'},{v:100,a:45,c:'#34d399'},{v:150,a:45,c:'#34d399'}]};window.loadPreset=(name)=>{cS_();const s=P_[name];s.forEach((sh,i)=>{setTimeout(()=>l(sh.v,sh.a,sh.c),i*350)})};a();
+        // OBFUSCATED JS (PROTECTED CODE)
+        const g=9.81;let tM=1.0;const c=document.getElementById('simCanvas');const d=c.getContext('2d');let w,h;let dS=4;let pA=[];let aI;let cC='#60a5fa';const e={vS:document.getElementById('v-slider'),vD:document.getElementById('v-disp'),aS:document.getElementById('a-slider'),aD:document.getElementById('a-disp'),sS:document.getElementById('s-slider'),sD:document.getElementById('s-disp'),hT:document.getElementById('hud-t'),hX:document.getElementById('hud-x'),hY:document.getElementById('hud-y'),hS:document.getElementById('hud-status'),tB:document.getElementById('data-body'),sI:document.getElementById('scale-info')};function r(){w=c.offsetWidth;h=c.offsetHeight;c.width=w;c.height=h}window.addEventListener('resize',r);r();class P{constructor(id,v0,angle,color){this.id=id;this.v0=v0;this.angle=angle;this.color=color;this.rad=angle*Math.PI/180;this.vx=v0*Math.cos(this.rad);this.vy0=v0*Math.sin(this.rad);this.tT=(2*this.vy0)/g;this.mH=(Math.pow(this.vy0,2))/(2*g);this.mR=this.vx*this.tT;this.t=0;this.x=0;this.y=0;this.l=false;this.path=[{x:0,y:0}]}update(dt){if(this.l)return;this.t+=dt;if(this.t>=this.tT){this.t=this.tT;this.x=this.mR;this.y=0;this.l=true}else{this.x=this.vx*this.t;this.y=(this.vy0*this.t)-(0.5*g*this.t*this.t)}this.path.push({x:this.x,y:this.y})}draw(){const s=dS;const gY=h;if(this.path.length>1){d.beginPath();d.moveTo(0,gY);for(let p of this.path){d.lineTo(p.x*s,gY-(p.y*s))}d.strokeStyle=this.color;d.lineWidth=2.5;d.lineCap='round';d.stroke()}if(this.l){const fX=this.mR*s;const sH=40;d.beginPath();d.setLineDash([3,3]);d.moveTo(fX,gY);d.lineTo(fX,gY-sH);d.strokeStyle=this.color;d.lineWidth=1;d.stroke();d.setLineDash([]);d.beginPath();d.arc(fX,gY,3,0,Math.PI*2);d.fillStyle=this.color;d.fill();dB(d,fX,gY-sH,this.mR.toFixed(1),this.color)}else{const cX=this.x*s;const cY=gY-(this.y*s);d.beginPath();d.arc(cX,cY,6,0,Math.PI*2);d.fillStyle='#fff';d.fill();d.shadowBlur=15;d.shadowColor=this.color;d.beginPath();d.arc(cX,cY,6,0,Math.PI*2);d.fill();d.shadowBlur=0;uH(this)}}}function dB(c,x,y,t,col){const p=6;c.font="bold 11px Roboto Mono";const m=c.measureText(t);const w=m.width+p*2;const h=20;const bX=x-w/2;const bY=y-h;c.fillStyle=col;c.beginPath();c.roundRect(bX,bY,w,h,4);c.fill();c.fillStyle="#000";c.textAlign="center";c.textBaseline="middle";c.fillText(t,x,bY+h/2+1)}function uH(p){e.hT.innerText=p.t.toFixed(2)+'s';e.hX.innerText=p.x.toFixed(1)+'m';e.hY.innerText=p.y.toFixed(1)+'m';e.hS.innerText="RUNNING";e.hS.style.color=p.color}function cS(){if(pA.length===0){dS=4;return}let mR=0;let mH=0;pA.forEach(p=>{if(p.mR>mR)mR=p.mR;if(p.mH>mH)mH=p.mH});mR=Math.max(mR*1.1,50);mH=Math.max(mH*1.2,20);const sX=w/mR;const sY=h/mH;dS=Math.min(sX,sY);e.sI.innerText=`1m=${dS.toFixed(1)}px`}function l(v0,angle,color){const p=new P(pA.length+1,v0,angle,color);pA.push(p);const r=`<tr><td><span style="display:inline-block;width:10px;height:10px;background:${p.color};border-radius:50%;margin-right:5px;"></span>#${p.id}</td><td>${p.v0}</td><td>${p.angle}°</td><td>${p.tT.toFixed(2)}</td><td>${p.mH.toFixed(1)}</td><td style="color:${p.color};font-weight:700">${p.mR.toFixed(1)}</td></tr>`;e.tB.insertAdjacentHTML('afterbegin',r);if(!aI)a()}function cS_(){pA=[];e.tB.innerHTML='';d.clearRect(0,0,w,h);dG();e.hS.innerText="READY";e.hS.style.color="#fff"}function dG(){const s=dS;let gS=10;if(s<2)gS=50;if(s<0.5)gS=100;const pS=gS*s;d.beginPath();d.strokeStyle='rgba(255,255,255,0.04)';d.lineWidth=1;for(let x=0;x<w;x+=pS){d.moveTo(x,0);d.lineTo(x,h)}for(let y=h;y>0;y-=pS){d.moveTo(0,y);d.lineTo(w,y)}d.stroke();d.beginPath();d.strokeStyle='#fff';d.lineWidth=2;d.moveTo(0,h);d.lineTo(w,h);d.stroke()}function a(){r();cS();d.clearRect(0,0,w,h);dG();let act=false;const dt=0.016*tM;pA.forEach(p=>{p.update(dt);p.draw();if(!p.l)act=true});if(!act&&pA.length>0){e.hS.innerText="DONE";e.hS.style.color="#94a3b8"}aI=requestAnimationFrame(a)}e.vS.oninput=(a)=>e.vD.innerText=a.target.value+' m/s';e.aS.oninput=(a)=>e.aD.innerText=a.target.value+'°';e.sS.oninput=(a)=>{tM=parseFloat(a.target.value);e.sD.innerText=tM.toFixed(1)+'x'};document.querySelectorAll('.color-dot').forEach(d=>{d.onclick=function(){document.querySelector('.color-dot.active').classList.remove('active');this.classList.add('active');cC=this.dataset.c}});document.getElementById('btn-launch').onclick=()=>l(parseInt(e.vS.value),parseInt(e.aS.value),cC);document.getElementById('btn-clear').onclick=cS_;const P_={classic:[{v:100,a:30,c:'#34d399'},{v:100,a:45,c:'#60a5fa'},{v:100,a:60,c:'#f43f5e'}],complementary:[{v:120,a:15,c:'#fbbf24'},{v:120,a:75,c:'#a78bfa'}],velocity:[{v:50,a:45,c:'#34d399'},{v:100,a:45,c:'#34d399'},{v:150,a:45,c:'#34d399'}]};window.loadPreset=(name)=>{cS_();const s=P_[name];s.forEach((sh,i)=>{setTimeout(()=>l(sh.v,sh.a,sh.c),i*350)})};a();
     </script>
 </body>
 </html>
